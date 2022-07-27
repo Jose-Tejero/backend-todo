@@ -11,7 +11,7 @@ const getAllTodos = () => {
   return todoDB;
 };
 
-const getTodoById = () => {
+const getTodoById = (id) => {
   const filteredDB = todoDB.filter((todo) => todo.id === id);
   return filteredDB[0];
 };
@@ -40,8 +40,11 @@ const createTodo = (todoObj) => {
 const editTodo = (id, data) => {
   const index = todoDB.findIndex((item) => item.id == id);
   if (index !== -1) {
-    todoDB[index] = data;
-    return todoDB[index];
+    if (todoDB[index].status !== data.status) {
+      todoDB[index].status = data.status;
+      return todoDB[index];
+    }
+    return 1;
   }
   return false;
 };

@@ -30,7 +30,7 @@ const getById = (req, res) => {
 
 const postNewTodo = (req, res) => {
   const data = req.body;
-  if (data.title && data.description && data.status) {
+  if (data.title && data.description && typeof(data.status) === 'boolean') {
     const newTodo = createTodo(data);
     res.status(201).json({ message: "Todo created", data: newTodo });
   } else {
@@ -42,9 +42,13 @@ const putTodo = (req, res) => {
   const id = Number(req.params.id);
   const data = req.body;
   const newTodoEdited = editTodo(id, data);
-  if (data.title && data.description && data.status) {
+  if (typeof(data.status) === 'boolean') {
     if (newTodoEdited) {
-      res.status(200).json({ message: "Todo edited" });
+      if (newTodoEdited === 1) {
+        res.status(200).json({ message: "No changes" });
+      } else {
+        res.status(200).json({ message: "Todo edited" });
+      }
     } else {
       res.status(400).json({ message: "Invalid Id, todo doesn't exist" });
     }

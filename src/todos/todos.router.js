@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const httpTodos = require("./todos.http");
 
-router.route("/todos").get(httpTodos.getAll).post(httpTodos.putTodo);
+router.route("/todos").get(httpTodos.getAll).post(httpTodos.postNewTodo);
 
 router
   .route("/todos/:id")
